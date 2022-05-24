@@ -85,7 +85,7 @@
                             </ul>
                         </li>
                         <% if (locals.utilizator) { %>
-                            <li class="li_meniu"><a href="/profil" class="button"><%- locals.utilizator.username %></a></li>
+                            <li class="li_meniu"><a href="/managementProduse" class="button"><%- locals.utilizator.username %></a></li>
                             <li class="li_meniu"><a href="/logout" class="button">Logout</a></li>
                         <% }  %>
                         <% if (locals.utilizator && locals.utilizator.rol=="admin") { %> 
