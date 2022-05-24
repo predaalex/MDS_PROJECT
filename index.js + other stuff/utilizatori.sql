@@ -20,3 +20,13 @@ CREATE TABLE IF NOT EXISTS accesari (
    pagina VARCHAR(100) NOT NULL,
    data_accesare TIMESTAMP DEFAULT current_timestamp
 );
+
+CREATE TABLE IF NOT EXISTS public.prods
+(
+    id_prods integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nume character varying COLLATE pg_catalog."default" NOT NULL,
+    greutate integer NOT NULL,
+    calorii integer,
+    pret double NOT NULL,
+    CONSTRAINT prods_pkey PRIMARY KEY (id_prods)
+)
