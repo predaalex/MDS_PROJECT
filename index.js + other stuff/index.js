@@ -11,7 +11,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const session = require('express-session');
 
-var client = new Client({user:'buki',password:'buki', database:'postgres', host: 'localhost', port:5432});
+var client=new Client({ user: 'andrei', password:'andrei', database:'proiectweb', host:'localhost', port:5432 });
 client.connect();
 
 app=express();
@@ -146,13 +146,13 @@ function makeid(length) {
 var test_string = makeid(7);
 
 async function trimiteMail(username, email, token){
-    var numeDomeniu="test";
+    var numeDomeniu= require("nodemailer");
 	var transp= nodemailer.createTransport({
 		service: "gmail",
 		secure: false,
 		auth:{//date login 
 			user:"tehniciwebbuki@gmail.com",
-			pass:"Bobolelo2"
+			pass:"ciayuwxwuhsodgde"
 		},
 		tls:{
 			rejectUnauthorized:false
@@ -160,7 +160,7 @@ async function trimiteMail(username, email, token){
 	});
 	//genereaza html
 	await transp.sendMail({
-		from:"test.tweb.node@gmail.com",
+		from:"tehniciwebbuki@gmail.com",
 		to:email,
 		subject:"Te-ai inregistrat cu succes",
 		text:"Username-ul tau este "+username,
@@ -178,8 +178,8 @@ app.post("/inreg", function(req,res) {
         if (!campuriText.username)
             eroare+="Username-ul nu poate fi necompletat. ";
 
-        if ( !campuriText.username.match("^[a-z]{0,1}[a-z0-9]{0,5}[0-9]{4}$"))
-            eroare+="Username-ul trebuie sa conțină maxim 10 caractere, să inceapă cu o literă și ultimele 4 caractere să fie cifre. ";
+        if ( !campuriText.username.match("^[a-z]{0,1}[a-z0-9]{0,20}$"))
+            eroare+="Username-ul trebuie sa conțină maxim 20 caractere, să inceapă cu o literă și să conțină doar litere și cifre. ";
 
         console.log(campuriText.parola);
         if(!campuriText.parola) {
@@ -214,20 +214,21 @@ app.post("/inreg", function(req,res) {
 
         if (eroare == "") {
             var quertUsernameUnic = `select * from utilizatori where username = '${campuriText.username}'`;
+
             client.query(quertUsernameUnic, function(err,rez) {
                 if (err) {
-                    res.render("pagini/inregistrare", {err: "eroare la baza de date"});
+                    res.render("pagini/inregistrare", {err: "Probleme la baza de date!"});
                     return;
                 }
                 if (rez.rows.length != null){
                     var criptareParola = crypto.scryptSync(campuriText.parola, test_string, 64).toString('hex');
-                    var queryUtiliz = `INSERT INTO utilizatori (id, username, nume, prenume, parola, email, culoare_chat, tema_site, salt) VALUES (DEFAULT,'${campuriText.username}', '${campuriText.nume}', '${campuriText.prenume}', '${criptareParola}', '${campuriText.email}', '${campuriText.culoareText}', '${campuriText.tema}', '${test_string}')`;
+                    var queryUtiliz = `INSERT INTO utilizatori (id, username, nume, prenume, parola, rol, email, culoare_chat, data_adaugare, salt) VALUES (DEFAULT,'${campuriText.username}', '${campuriText.nume}', '${campuriText.prenume}', '${criptareParola}', 'comun','${campuriText.email}', '${campuriText.culoareText}', DEFAULT, '${test_string}')`;
                     
                     console.log(queryUtiliz);
                     client.query(queryUtiliz, function(err,rez){
                         if (err) {
                             console.log(err);
-                            res.render("pagini/inregistrare", {err: "eroare la baza de date"});
+                            res.render("pagini/inregistrare", {err: "Eroare la baza de date dupa prima faza!" + err});
                         }
                         else {
                             trimiteMail(campuriText.username, campuriText.email);
@@ -247,6 +248,8 @@ app.post("/inreg", function(req,res) {
         }
     });
 });
+
+
 
 
 app.post("/login", function(req,res) {
@@ -321,6 +324,87 @@ app.get('/useri', function(req, res){
     
 });
 
+
+app.post("/managementProduse", function(req,res) {
+    var formular= new formidable.IncomingForm();
+    formular.parse(req, function(err, campuriText, campuriFile){
+        //verificari - TO DO
+        var eroare="";
+        if (!campuriText.username)
+            eroare+="Username-ul nu poate fi necompletat. ";
+
+        if ( !campuriText.username.match("^[a-z]{0,1}[a-z0-9]{0,20}$"))
+            eroare+="Username-ul trebuie sa conțină maxim 20 caractere, să inceapă cu o literă și să conțină doar litere și cifre. ";
+
+        console.log(campuriText.parola);
+        if(!campuriText.parola) {
+            eroare += "Introduceti o parola!";
+        }
+
+        if(!campuriText.rparola) {
+            eroare += "Introduceti parola a doua oara!";
+        }
+
+        if(!campuriText.email) {
+            eroare += "Introduceti un email!";
+        }
+
+        if(!campuriText.nume) {
+            eroare += "Introduceti un nume!";
+        }
+
+        if(!campuriText.prenume) {
+            eroare += "Introduceti un prenume!";
+        }
+
+        //verificari proprii
+
+        if(campuriText.email.match("^.com$") || campuriText.email.match("^.ro$")) {
+            eroare += "Mail invalid!";
+        }
+
+        if(!campuriText.nume.match("^[A-Z]")) {
+            eroare += "Numele trebuie sa inceapa cu litera mare!";
+        }
+
+        if (eroare == "") {
+            var quertUsernameUnic = `select * from utilizatori where username = '${campuriText.username}'`;
+
+            client.query(quertUsernameUnic, function(err,rez) {
+                if (err) {
+                    res.render("pagini/managementProduse", {err: "Probleme la baza de date!"});
+                    return;
+                }
+                if (rez.rows.length != null){
+                    var criptareParola = crypto.scryptSync(campuriText.parola, test_string, 64).toString('hex');
+                    var queryUtiliz = "INSERT into produse values (DEFAULT, 'proba123456', 25, 'test', 'XD', 'tricou', 'salut', 10, '1996-12-02', 'rosu')";
+                    console.log("Ce query fac eu aici");
+                    console.log(queryUtiliz);
+                    client.query(queryUtiliz, function(err,rez){
+                        if (err) {
+                            console.log(err);
+                            res.render("pagini/managementProduse", {err: "Eroare la baza de date dupa prima faza!" + err});
+                        }
+                        else {
+                            trimiteMail(campuriText.username, campuriText.email);
+                            res.render("pagini/managementProduse", {err: "", raspuns: "Date introduse!"});
+                        }
+                    });
+                }
+                else {
+                    console.log("sal", rez.rows);
+                    eroare += "Utilizatorul deja exista!";
+                    res.render("pagini/managementProduse",{err:eroare});
+                }
+            });
+        }
+        else {
+            res.render("pagini/managementProduse",{err:eroare});
+        }
+    });
+});
+
+
 app.post("/sterge_utiliz",function(req, res){
 	if( req.session && req.session.utilizator && req.session.utilizator.rol=="admin"  ){
 	var formular= new formidable.IncomingForm()
@@ -371,7 +455,7 @@ app.get("/*", function(req,res){
     
 })
 
-var s_port = process.env.PORT || 8080;
+var s_port = process.env.PORT || 8081;
 //app.listen(8080);
 app.listen(s_port);
 

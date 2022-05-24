@@ -1,0 +1,171 @@
+#derulant {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  position: absolute;
+  animation-name: gal1;
+}
+
+#derulant figure:nth-child(1) {
+  animation-name: fig1;
+}
+
+#derulant figure:nth-child(2) {
+  animation-name: fig1;
+}
+
+@keyframes fig1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.galerie {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  height: 350px;
+  border: 1px solid black;
+  position: relative;
+  overflow: hidden;
+}
+
+.galerie figcaption {
+  position: absolute;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  width: 100%;
+  text-align: center;
+}
+
+.galerie figure {
+  position: relative;
+  width: 400px;
+  height: 350px;
+}
+
+#derulant:hover {
+  animation-play-state: paused;
+}
+
+#galerie-animata #derulant {
+  display: grid;
+  width: 1200px;
+  grid-template-columns: 400px 400px 400px;
+  grid-template-rows: 350px 350px 350px;
+  grid-row-gap: 0px;
+  grid-column-gap: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation-name: animatie_gal;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 30s;
+}
+
+.galerie figcaption {
+  bottom: 0px;
+}
+
+@keyframes animatie_gal {
+  0% {
+    top: 0px;
+    left: 0;
+  }
+  8.09090909091% {
+    top: -350px;
+    left: 0;
+  }
+  9.09090909091% {
+    top: -350px;
+    left: 0;
+  }
+  17.1818181818% {
+    top: -350px;
+    left: -800px;
+  }
+  18.1818181818% {
+    top: -350px;
+    left: -800px;
+  }
+  26.2727272727% {
+    top: -350px;
+    left: -400px;
+  }
+  27.2727272727% {
+    top: -350px;
+    left: -400px;
+  }
+  35.3636363636% {
+    top: 0px;
+    left: -400px;
+  }
+  36.3636363636% {
+    top: 0px;
+    left: -400px;
+  }
+  44.4545454545% {
+    top: 0px;
+    left: -800px;
+  }
+  45.4545454545% {
+    top: 0px;
+    left: -800px;
+  }
+  53.5454545455% {
+    top: -700px;
+    left: -800px;
+  }
+  54.5454545455% {
+    top: -700px;
+    left: -800px;
+  }
+  62.6363636364% {
+    top: -700px;
+    left: 0px;
+  }
+  63.6363636364% {
+    top: -700px;
+    left: 0px;
+  }
+  71.7272727273% {
+    top: -700px;
+    left: -400px;
+  }
+  72.7272727273% {
+    top: -700px;
+    left: -400px;
+  }
+  80.8181818182% {
+    top: -1050px;
+    left: -400px;
+  }
+  81.8181818182% {
+    top: -1050px;
+    left: -400px;
+  }
+  89.9090909091% {
+    top: -1050px;
+    left: 0px;
+  }
+  90.9090909091% {
+    top: -1050px;
+    left: 0px;
+  }
+  99% {
+    top: -1050px;
+    left: -800px;
+  }
+  100% {
+    top: -1050px;
+    left: -800px;
+  }
+}
