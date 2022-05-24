@@ -1,6 +1,8 @@
 {
   "name": "proiectweb",
-  "engines": {"node": "16.x"},
+  "engines": {
+    "node": "16.x"
+  },
   "version": "1.0.0",
   "description": "Magazin de huse pentru telefoane",
   "main": "index.js",

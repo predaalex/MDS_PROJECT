@@ -1,0 +1,101 @@
+{
+    "cale_galerie":"../resurse/imagini/",
+    "imagini":[
+        {
+            "fisier":"photo1.jpg",
+            "titlu":"Ciorba de pui cu taitei de casa",
+            "zi_meniu":"0",
+            "descriere":"Ciorba de pui cu taitei de casa"
+        },{
+            "fisier":"photo2.jpg",
+            "titlu":"Ciorba perisoare",
+            "zi_meniu":"1",
+            "descriere":"Ciorba perisoare"
+        },{
+            "fisier":"photo3.jpg",
+            "titlu":"Ciorba de burta",
+            "zi_meniu":"2",
+            "descriere":"Ciorba de burta"
+        },{
+            "fisier":"photo4.jpg",
+            "titlu":"Tagliatelle cu somon",
+            "zi_meniu":"0",
+            "descriere":"Tagliatelle cu somon"
+        },{
+            "fisier":"photo5.jpg",
+            "titlu":"Spaghete Carbonara",
+            "zi_meniu":"1",
+            "descriere":"Spaghete Carbonara"
+        },{
+            "fisier":"photo6.jpg",
+            "titlu":"Penne Milaneze gratinate",
+            "zi_meniu":"2",
+            "descriere":"Penne Milaneze gratinate"
+        },{
+            "fisier":"photo16.jpg",
+            "titlu":"Cartofi Prajiti",
+            "zi_meniu":"3",
+            "descriere":"Cartofi Prajiti"
+        },{
+            "fisier":"photo7.jpg",
+            "titlu":"Coaste de porc bbq si cartofi prajiti",
+            "zi_meniu":"3",
+            "descriere":"Coaste de porc bbq si cartofi prajiti"
+        },{
+            "fisier":"photo17.jpg",
+            "titlu":"Cartofi cu cascaval",
+            "zi_meniu":"4",
+            "descriere":"Cartofi cu cascaval"
+        },{
+            "fisier":"photo8.jpg",
+            "titlu":"Quesadilla de pui cu cartofi prajiti si sos",
+            "zi_meniu":"4",
+            "descriere":"Quesadilla de pui cu cartofi prajiti si sos"
+        },{
+            "fisier":"photo18.jpg",
+            "titlu":"Ciuperci Grill",
+            "zi_meniu":"5",
+            "descriere":"Ciuperci Grill"
+        },{
+            "fisier":"photo9.jpg",
+            "titlu":"Cheesburger de vita si cartofi prajiti",
+            "zi_meniu":"5",
+            "descriere":"Cheesburger de vita si cartofi prajiti"
+        },{
+            "fisier":"photo19.jpg",
+            "titlu":"Cartofi Piure",
+            "zi_meniu":"6",
+            "descriere":"Cartofi Piure"
+        },{
+            "fisier":"photo10.jpg",
+            "titlu":"Piept de pui grill si orez cu legume",
+            "zi_meniu":"6",
+            "descriere":"Piept de pui grill si orez cu legume"
+        },{
+            "fisier":"photo11.jpg",
+            "titlu":"Aripioare de pui picante",
+            "zi_meniu":"7",
+            "descriere":"Aripioare de pui picante"
+        },{
+            "fisier":"photo12.jpg",
+            "titlu":"Piept de pui grill si broccoli cu legume",
+            "zi_meniu":"7",
+            "descriere":"Piept de pui grill si broccoli cu legume"
+        },{
+            "fisier":"photo13.jpg",
+            "titlu":"Pulpa dezosata cu piure de cartofi",
+            "zi_meniu":"7",
+            "descriere":"Pulpa dezosata cu piure de cartofi"
+        },{
+            "fisier":"photo14.jpg",
+            "titlu":"File de somon la gratar si orez cu legume",
+            "zi_meniu":"7",
+            "descriere":"File de somon la gratar si orez cu legume"
+        },{
+            "fisier":"photo15.jpg",
+            "titlu":"Platou mix grill pentru 2 persoane",
+            "zi_meniu":"7",
+            "descriere":"Platou mix grill pentru 2 persoane"
+        }
+    ]
+}

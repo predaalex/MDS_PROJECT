@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta name="keywords" content="husa,telefon,silicon,personalizata,samsung,iphone,huawei,xiaomi,htc">
+        <meta name="description" content="Cele mai bune huse pentru telefonul tau, la cel mai bun pret.">
+
+        <%- include("../fragmente/head.ejs") %>
+
+        <link rel="stylesheet" href="/resurse/temp/galerie-animata.css">
+        <link rel="stylesheet" href="/resurse/css/table_index.css">
+        <title>Husse</title>
+        
+    </head>
+    <body>
+        <%- include("../fragmente/header.ejs") %>
+    <main>
+        <div id="container">
+            <div id="div8">
+                <div id="galerie-animata" class="galerie">
+                    <div id="derulant">
+                        <%
+                            for (let imag of locals.imagini_an){ 
+                        %>
+                        <figure>
+                            <picture>
+                                <source srcset="/<%- imag.mic %>" media="(max-width:700px)">
+                                <img src="<%- locals.cale_an %><%- imag.fisier %>" alt="<%- imag.titlu %>" width="400" height="350">
+                            </picture>
+                            <figcaption><%- imag.descriere %> </figcaption>
+                        </figure>
+                        <% } %>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div id="div3">
+                <div id="stil-video">
+                    <video id="video-div3" playsinline autoplay loop muted poster="/resurse/imaginipoza.jpg" preload="auto" controls>
+                        <source width="400" height="300" src="../resurse/videos/cinematic_cooking.mp4" type="video/mp4">
+                        <!-- <source src="../resurse/videos/videoclip_ad.ogv" type="video/ogv"> -->
+                        <!-- <track default src="../resurse/videos/vtt/subtitles-ro.vtt" kind="captions" srclang="ro" label="romana"> -->
+                        <!-- <track src="../resurse/videos/vtt/subtitles-en.vtt" kind="captions" srclang="en" label="engleza"> -->
+                            
+                    </video>
+                </div>
+            </div>
+
+
+            <div id="div1">
+                
+                <h2 class = "meniul-zilei">Meniul Zilei<h2>
+
+                <section id="galerie-statica">
+                    <div id="grid-galerie">
+                        <%
+                            for (let imag of locals.imagini){ 
+                                var nr=0;
+                                var d=new Date();
+                                <!-- var day = 6 ; // testing day menu --> 
+                                
+                                if(d.getDay() == imag.zi_meniu && nr<12){  
+                                    nr=nr+1;
+                        %>
+                        <figure>
+                            <picture>
+                                <source srcset="/<%- imag.mic %>" media="(max-width:700px)">
+                                <a href="http://google.com">
+                                    <img id="i-galerie-stat" src="<%- locals.cale %><%- imag.fisier %>" alt="<%- imag.titlu %>" width="400" height="350">
+                                </a>
+                            </picture>
+                            <figcaption><%- imag.descriere %> </figcaption>
+                        </figure>
+                        <% } %>
+                        <% } %>
+                    </div>
+
+                </section>
+                
+                
+                
+            </div>
+        </div>
+    </main>
+        <%- include("../fragmente/footer.ejs") %>
+    </body>
+</html>
