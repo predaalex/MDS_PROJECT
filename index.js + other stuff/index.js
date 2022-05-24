@@ -10,11 +10,14 @@ const formidable = require('formidable');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const session = require('express-session');
+const html_to_pdf = require('html-pdf-node');
 
-var client=new Client({ user: 'andrei', password:'andrei', database:'proiectweb', host:'localhost', port:5432 });
+var client = new Client({user:'buki',password:'buki', database:'postgres', host: 'localhost', port:5432});
 client.connect();
 
 app=express();
+
+app.use(["/produse_cos","/cumpara"],express.json({limit:'2mb'}));//obligatoriu de setat pt request body de tip json
 
 //crearea sesiunii (obiectul de tip request capata proprietatea session si putem folosi req.session)
 app.use(session({
@@ -162,6 +165,36 @@ async function trimiteMail(username, email, token){
 	})
 }
 
+app.post("/produse_cos",function(req, res){
+    
+	//console.log("req.body: ",req.body);
+    //console.log(req.get("Content-type"));
+    //console.log("body: ",req.get("body"));
+
+    /* prelucrare pentru a avea toate id-urile numerice si pentru a le elimina pe cele care nu sunt numerice */
+    var iduri=[]
+    for (let elem of req.body.ids_prod){
+        let num=parseInt(elem);
+        if (!isNaN(num)) //daca este numar
+            iduri.push(num);
+    }
+    if (iduri.length==0){
+        res.send("eroare");
+        return;
+    }
+
+    //console.log("select id, nume, pret, gramaj, calorii, categorie, imagine from prajituri where id in ("+iduri+")");
+    client.query("select id, nume, data_lansare, material, marca, pret, model, imagine from produse where id in ("+iduri+")", function(err,rez){
+        //console.log(err, rez);
+        //console.log(rez.rows);
+        res.send(rez.rows);
+       
+       
+    });
+
+    
+});
+
 app.post("/inreg", function(req,res) {
     var formular= new formidable.IncomingForm();
     formular.parse(req, function(err, campuriText, campuriFile){
@@ -239,9 +272,6 @@ app.post("/inreg", function(req,res) {
     });
 });
 
-
-
-
 app.post("/login", function(req,res) {
     var formular= new formidable.IncomingForm();
     formular.parse(req, function(err, campuriText, campuriFile){
@@ -312,6 +342,64 @@ app.get('/useri', function(req, res){
     
 });
 
+
+async function trimitefactura2(username, email,numefis){
+	var transp= nodemailer.createTransport({
+		service: "gmail",
+		secure: false,
+		auth:{//date login 
+            user:"tehniciwebbuki@gmail.com",
+			pass:"ciayuwxwuhsodgde"
+		},
+		tls:{
+			rejectUnauthorized:false
+		}
+	});
+	//genereaza html
+	await transp.sendMail({
+		from:"tehniciwebbuki@gmail.com",
+		to:email,
+		subject:"Factură",
+		text:"Stimate "+username+", aveți atașată factura",
+		html:"<h1>Salut!</h1><p>Stimate "+username+", aveți atașată factura</p>",
+        attachments: [
+            {   // utf-8 string as an attachment
+                filename: 'factura.pdf',
+                content: fs.readFileSync(numefis)
+            }
+        ]
+	})
+	console.log("trimis mail");
+}
+app.post("/cumpara",function(req, res){
+    if(!req.session.utilizator){
+        res.write("Nu puteti cumpara daca nu sunteti logat!");res.end();
+        return;
+    }
+    client.query("select id, nume, pret, greutate from produse where id in ("+req.body.ids_prod+")", function(err,rez){
+        console.log(err, rez);
+        console.log(rez.rows);
+        
+         let rezFactura=ejs.render(fs.readFileSync("views/pagini/factura.ejs").toString("utf8"),{utilizator:req.session.utilizator,produse:rez.rows});
+        //console.log(rezFactura);
+        let options = { format: 'A4', args: ['--no-sandbox'] };
+
+        let file = { content: rezFactura };
+
+        html_to_pdf.generatePdf(file, options).then(function(pdf) {
+            if(!fs.existsSync("./temp"))
+                fs.mkdirSync("./temp");
+            var numefis="./temp/test"+(new Date()).getTime()+".pdf";
+            fs.writeFileSync(numefis,pdf);
+            trimitefactura2(req.session.utilizator.username, req.session.utilizator.email, numefis);
+            res.write("Totu bine!");res.end();
+        }); 
+        // trimiteFactura(req.session.utilizator.nume, "fantomalbastra@gmail.com");
+       
+    });
+
+    
+});
 
 app.post("/managementProduse", function(req,res) {
     var formular= new formidable.IncomingForm();

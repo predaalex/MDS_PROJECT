@@ -526,3 +526,38 @@ picture{
   z-index: 1000;
 }
 
+.cart {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.section-cart {
+  display: flex;
+  padding: 1rem;
+}
+
+.cos-virtual {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 50%;
+}
+
+.cos-virtual-imagine {
+  width: 100%;
+}
+
+.cos-virtual-info {
+  width: 100%;
+
+  border-bottom: 2px solid gray;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.buy-btn {
+  padding: .3125rem;
+  background-color: #314442;
+  color: white;
+}
