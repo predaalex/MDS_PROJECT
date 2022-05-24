@@ -1,2 +1,2 @@
 # PROIECT_MDS
-An online shop for phonecases, where i used a lot of technologies like CSS, SCSS, HTML, JAVASCRIPT (+ Node.JS) and SQL in POSTGRESQL for database.
+Proiect MDS - site de curierat pentru un restaurant. Tehnologii folosite: CSS, SCSS, HTML, JAVASCRIPT (+ Node.JS) si SQL in POSTGRESQL pentru baza de date.
