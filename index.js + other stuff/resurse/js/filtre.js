@@ -21,7 +21,6 @@ window.onload= function(){
     var btn_order_asc=document.getElementById("buton_asc");
     btn_order_asc.onclick=function()
     {
-        console.log("RESPEEEEECT PENTRU SORTARE");
         var articole_sort=document.getElementsByClassName("produs");
         var v_articole=Array.from(articole_sort);
         var val_sortare=document.getElementsByClassName("val-sortat")[0];
