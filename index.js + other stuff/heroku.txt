@@ -1,2 +1,0 @@
-Creating app... done, ⬢ mighty-cliffs-81297
-https://mighty-cliffs-81297.herokuapp.com/ | https://git.heroku.com/mighty-cliffs-81297.git
