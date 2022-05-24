@@ -14,14 +14,13 @@
 		</style>
 	</head>
 	<body>
-		<h1>Factură Dulcelind</h1>
+		<h1>Factură Mancarica buna buna</h1>
 		<p>Stimate domn <%-locals.utilizator.nume %>, aveți aici lista de produse achiziționate.</p> 
 		<table id="tabl">
 			<thead>
 				<tr>
 					<th>Produs</th>
 					<th>Preț</th>
-					<th>QR</th>
 				</tr>
 			</thead>
 			
@@ -34,7 +33,6 @@
                     <tr>
                         <td><%-  prod.nume %></td>
                         <td><%-  prod.pret %></td>
-                        <td><img src="<%- locals.protocol%><%- locals.domeniu %>/resurse/imagini/qrcode/<%-  prod.id %>.png"></td>
                     </tr>
                 <% } %>
 			</tbody>

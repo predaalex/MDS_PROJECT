@@ -32,7 +32,7 @@ window.addEventListener("load",function(){
                     divCos.appendChild(divImagine);
                     let divInfo=document.createElement("div");
                     divInfo.classList.add("cos-virtual-info");
-                    divInfo.innerHTML=`<p><b>${prod.nume}</b></p><p>Pret: ${prod.pret}</p><p>Gramaj: ${prod.gramaj}</p>`;
+                    divInfo.innerHTML=`<p><b>${prod.nume}</b></p><p>Pret: ${prod.pret}RON</p><p>Greutate: ${prod.greutate}g</p>`;
                     divCos.appendChild(divInfo);
                     document.getElementsByTagName("main")[0].insertBefore(divCos, document.getElementById("cumpara"));
                 }

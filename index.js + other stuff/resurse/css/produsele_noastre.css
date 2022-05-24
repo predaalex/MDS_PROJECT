@@ -33,7 +33,9 @@ main{
   text-align: center;
 }
 .grid-produse .produs figure img{
-  border:1px solid grey
+  border:1px solid grey;
+  width: 350px!important;
+  height: 300px!important;
 }
 .grid-produse .produs .info-prod{
   display:flex;

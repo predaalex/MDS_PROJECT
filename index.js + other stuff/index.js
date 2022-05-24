@@ -10,9 +10,9 @@ const formidable = require('formidable');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const session = require('express-session');
-//const html_to_pdf = require('html-pdf-node');
+const html_to_pdf = require('html-pdf-node');
 
-var client = new Client({user:'andrei',password:'andrei', database:'proiectweb', host: 'localhost', port:5432});
+var client = new Client({user:'buki',password:'buki', database:'postgres', host: 'localhost', port:5432});
 client.connect();
 
 app=express();
@@ -43,11 +43,11 @@ app.get("/produsele_noastre", function(req, res){
 });
 
 app.get("/produs/:id", function(req, res){
-    client.query(`SELECT * FROM produse where id=${req.params.id}`, function(err,rez){
+    client.query(`SELECT * FROM prods where id_prods=${req.params.id}`, function(err,rez){
         if(!err){
             res.render("pagini/produs",{prod:rez.rows[0]})
         }
-    })
+    });
 });
 
 
@@ -177,11 +177,11 @@ app.post("/produse_cos",function(req, res){
         res.send("eroare");
         return;
     }
-
     //console.log("select id, nume, pret, gramaj, calorii, categorie, imagine from prajituri where id in ("+iduri+")");
-    client.query("select id, nume, data_lansare, material, marca, pret, model, imagine from produse where id in ("+iduri+")", function(err,rez){
-        //console.log(err, rez);
-        //console.log(rez.rows);
+    client.query("select * from prods where id_prods in ("+iduri+")", function(err,rez){
+        
+        
+        console.log(rez.rows);
         res.send(rez.rows);
        
        
@@ -272,10 +272,8 @@ app.post("/login", function(req,res) {
     formular.parse(req, function(err, campuriText, campuriFile){
         
         var querylogin=`select * from utilizatori where username= '${campuriText.username}' `;
-        console.log(querylogin);
         client.query(querylogin, function(err, rez){
             if (err) {
-                console.log(err);
                 res.render("pagini/404", {err: "eroare baza de date, va rog incercati mai tarziu"});
                 return;
             }
@@ -373,7 +371,10 @@ app.post("/cumpara",function(req, res){
         res.write("Nu puteti cumpara daca nu sunteti logat!");res.end();
         return;
     }
-    client.query("select id, nume, pret, greutate from produse where id in ("+req.body.ids_prod+")", function(err,rez){
+
+    console.log(req.body.ids_prod);
+
+    client.query("select * from prods where id_prods in ("+req.body.ids_prod+")", function(err,rez){
         console.log(err, rez);
         console.log(rez.rows);
         
