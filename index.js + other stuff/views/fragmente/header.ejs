@@ -6,6 +6,66 @@
         </span>
     </div>
 
+
+                        </li>
+                        
+                        <% if (locals.utilizator && locals.utilizator.rol=="admin") { %> 
+                            <li class="li_meniu dropdown">
+                                <a href="javascript:void(0)" class="button dropbtn" id="butonmaimulte">Editare produse</a>
+                                <ul id="navmaimulte" style="list-style: none;">
+                                    <div class="dropdown-content">
+                                        <li>
+                                            <a href="/managementProduse" class="butoanemeniu-c">
+                                            <i class="fas fa-arrow-right butoanemeniu-c" 
+                                                aria-hidden="true">
+                                            </i> Adauga produse
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/stergeProduse" class="butoanemeniu-c">
+                                                <i class="fas fa-arrow-right butoanemeniu-c" 
+                                                aria-hidden="true">
+                                            </i> Sterge produse
+                                            </a>   
+                                        </li>   
+                                        <li>
+                                            <a href="/modificaProduse" class="butoanemeniu-c">
+                                            <i class="fas fa-arrow-right butoanemeniu-c" 
+                                                aria-hidden="true">
+                                            </i> Modifica produse
+                                            </a>
+                                        </li>                
+                                    </div>
+                                </ul>
+                            </li>
+                        <% } %>
+                        <% if (!locals.utilizator) { %>
+                            <li class="li_meniu"><a href="/inregistrare" class="button">Inregistrare</a></li>
+                        <% }  %>
+                        <% if (locals.utilizator && locals.utilizator.rol=="admin") { %> 
+                            <li class="li_meniu"><a href="/useri" class="button">Utilizatori</a></li>
+                        <% } %>
+                        <% if (locals.utilizator) { %>
+                            <li class="li_meniu"><a href="/logout" class="button">Logout</a></li>
+                        <% }  %>
+                        <% if (!locals.utilizator) { %>
+                            <form id="login" method="post" action="/login">
+                                
+                                <label>
+                                    Username: <input type="text" name="username" value="" class="login">
+                                </label>
+                                
+                                <label>
+                                    Parola: <input type="password" name="parola" value="" class="login">
+                                </label>
+                                
+                                <input type="submit" value="Login">
+                            </form>
+                            <% if(locals.mesajLogin) {%>
+                                <p style='color:red'>Eroare: <%- locals.mesajLogin %></p>
+                            <% } %>
+                        <% }        
+                        %>
     <div id="section-title">
         <p id="p-title">Mancarica buna buna</p>
     </div>
