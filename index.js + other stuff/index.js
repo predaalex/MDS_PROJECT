@@ -11,10 +11,12 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const session = require('express-session');
 
-var client=new Client({ user: 'andrei', password:'andrei', database:'proiectweb', host:'localhost', port:5432 });
+var client = new Client({user:'buki',password:'buki', database:'postgres', host: 'localhost', port:5432});
 client.connect();
 
 app=express();
+
+app.use(["/produse_cos","/cumpara"],express.json({limit:'2mb'}));//obligatoriu de setat pt request body de tip json
 
 //crearea sesiunii (obiectul de tip request capata proprietatea session si putem folosi req.session)
 app.use(session({
@@ -168,6 +170,36 @@ async function trimiteMail(username, email, token){
 	})
 	console.log("trimis mail");
 }
+
+app.post("/produse_cos",function(req, res){
+    
+	//console.log("req.body: ",req.body);
+    //console.log(req.get("Content-type"));
+    //console.log("body: ",req.get("body"));
+
+    /* prelucrare pentru a avea toate id-urile numerice si pentru a le elimina pe cele care nu sunt numerice */
+    var iduri=[]
+    for (let elem of req.body.ids_prod){
+        let num=parseInt(elem);
+        if (!isNaN(num)) //daca este numar
+            iduri.push(num);
+    }
+    if (iduri.length==0){
+        res.send("eroare");
+        return;
+    }
+
+    //console.log("select id, nume, pret, gramaj, calorii, categorie, imagine from prajituri where id in ("+iduri+")");
+    client.query("select id, nume, data_lansare, material, marca, pret, model, imagine from produse where id in ("+iduri+")", function(err,rez){
+        //console.log(err, rez);
+        //console.log(rez.rows);
+        res.send(rez.rows);
+       
+       
+    });
+
+    
+});
 
 app.post("/inreg", function(req,res) {
     var formular= new formidable.IncomingForm();
