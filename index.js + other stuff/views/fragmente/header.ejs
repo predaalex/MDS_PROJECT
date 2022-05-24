@@ -62,39 +62,46 @@
                                 </ul>
 
                         </li>
-                        <li class="li_meniu"><a href="/index#" class="button">Personalizează-ți husa!</a></li>
-                        <li class="li_meniu dropdown">
-                            <a href="javascript:void(0)" class="button dropbtn" id="butonmaimulte">Mai multe</a>
-                            <ul id="navmaimulte" style="list-style: none;">
-                                <div class="dropdown-content">
-                                    <li>
-                                        <a href="#" class="butoanemeniu-c">
-                                        <i class="fas fa-arrow-right butoanemeniu-c" 
-                                            aria-hidden="true">
-                                        </i> Cos de cumparaturi
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/inregistrare" class="butoanemeniu-c">
-                                            <i class="fas fa-arrow-right butoanemeniu-c" 
-                                            aria-hidden="true">
-                                        </i> Despre
-                                        </a>   
-                                    </li>                   
-                                </div>
-                            </ul>
-                        </li>
-                        <% if (locals.utilizator) { %>
-                            <li class="li_meniu"><a href="/managementProduse" class="button"><%- locals.utilizator.username %></a></li>
-                            <li class="li_meniu"><a href="/logout" class="button">Logout</a></li>
-                        <% }  %>
+                        
                         <% if (locals.utilizator && locals.utilizator.rol=="admin") { %> 
-                            <li class="li_meniu"><a href="/useri" class="button">Utilizatori</a></li>
+                            <li class="li_meniu dropdown">
+                                <a href="javascript:void(0)" class="button dropbtn" id="butonmaimulte">Editare produse</a>
+                                <ul id="navmaimulte" style="list-style: none;">
+                                    <div class="dropdown-content">
+                                        <li>
+                                            <a href="/managementProduse" class="butoanemeniu-c">
+                                            <i class="fas fa-arrow-right butoanemeniu-c" 
+                                                aria-hidden="true">
+                                            </i> Adauga produse
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/stergeProduse" class="butoanemeniu-c">
+                                                <i class="fas fa-arrow-right butoanemeniu-c" 
+                                                aria-hidden="true">
+                                            </i> Sterge produse
+                                            </a>   
+                                        </li>   
+                                        <li>
+                                            <a href="/modificaProduse" class="butoanemeniu-c">
+                                            <i class="fas fa-arrow-right butoanemeniu-c" 
+                                                aria-hidden="true">
+                                            </i> Modifica produse
+                                            </a>
+                                        </li>                
+                                    </div>
+                                </ul>
+                            </li>
                         <% } %>
                         <% if (!locals.utilizator) { %>
                             <li class="li_meniu"><a href="/inregistrare" class="button">Inregistrare</a></li>
                         <% }  %>
-
+                        <% if (locals.utilizator && locals.utilizator.rol=="admin") { %> 
+                            <li class="li_meniu"><a href="/useri" class="button">Utilizatori</a></li>
+                        <% } %>
+                        <% if (locals.utilizator) { %>
+                            <li class="li_meniu"><a href="/logout" class="button">Logout</a></li>
+                        <% }  %>
                         <% if (!locals.utilizator) { %>
                             <form id="login" method="post" action="/login">
                                 

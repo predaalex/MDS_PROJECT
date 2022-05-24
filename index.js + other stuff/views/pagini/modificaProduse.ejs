@@ -13,11 +13,28 @@
     <body>
         <%- include("../fragmente/header.ejs") %>
     <main>
+        <h2>Produse</h2>
+    
+            <table id="produse">
+                <tr>
+                  <th>Id</th><th>Nume</th><th>Greutate</th><th>Calorii</th><th>Pret</th>
+                </tr>
+      
+                <% for (var i = 0; i < produse.length; i++) { %>
+                    <tr>
+                    <td><%= produse[i].id_prods %></td>
+                    <td><%= produse[i].nume %></td>
+                    <td><%= produse[i].greutate %></td>
+                    <td><%= produse[i].calorii %></td>
+                    <td><%= produse[i].pret %></td>
+                    </tr> 		
+                <% } %>
+              </table>
         <div class="afisaj date">
             <h1 style="font-size: 30px;">Adaugare produs</h1>
             
             <% if (locals.err !="") { %>
-                <%-include("../fragmente/adaugareProduse", {action: "/managementProduse"}) %>
+                <%-include("../fragmente/modificareProduse", {action: "/managementProduse"}) %>
         <% } %>
         <% if(locals.raspuns) { %>
         <%- locals.raspuns+"<br/>"%>

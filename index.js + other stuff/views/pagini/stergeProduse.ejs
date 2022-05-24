@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta name="keywords" content="husa,telefon,silicon,personalizata,samsung,iphone,huawei,xiaomi,htc">
+        <meta name="description" content="Cele mai bune huse pentru telefonul tau, la cel mai bun pret.">
+
+        <%- include("../fragmente/head.ejs") %>
+
+        <link rel="stylesheet" href="/resurse/css/useri.css" type="text/css" />
+
+        <title>Husse</title>
+    </head>
+    <body>
+        <%- include("../fragmente/header.ejs") %>
+    <main>
+        <div class="afisaj">
+            <h2>Produse</h2>
+    
+            <table id="produse">
+                <tr>
+                  <th>Id</th><th>Nume</th><th>Greutate</th><th>Calorii</th><th>Pret</th>
+                </tr>
+      
+                <% for (var i = 0; i < produse.length; i++) { %>
+                    <tr>
+                    <td><%= produse[i].id_prods %></td>
+                    <td><%= produse[i].nume %></td>
+                    <td><%= produse[i].greutate %></td>
+                    <td><%= produse[i].calorii %></td>
+                    <td><%= produse[i].pret %></td>
+                    </tr> 		
+                <% } %>
+              </table>
+            
+            <p>Sterge utilizator</p>
+            <form id="sterge" method="post" action="/stergereProduse">
+                <label>
+                    Id: <input type="text" name="id" value="">
+                </label>
+                
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </main>
+        <%- include("../fragmente/footer.ejs") %>
+    </body>
+</html>
