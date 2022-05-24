@@ -10,6 +10,7 @@ const formidable = require('formidable');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const session = require('express-session');
+const html_to_pdf = require('html-pdf-node');
 
 var client = new Client({user:'buki',password:'buki', database:'postgres', host: 'localhost', port:5432});
 client.connect();
@@ -281,9 +282,6 @@ app.post("/inreg", function(req,res) {
     });
 });
 
-
-
-
 app.post("/login", function(req,res) {
     var formular= new formidable.IncomingForm();
     formular.parse(req, function(err, campuriText, campuriFile){
@@ -356,6 +354,64 @@ app.get('/useri', function(req, res){
     
 });
 
+
+async function trimitefactura2(username, email,numefis){
+	var transp= nodemailer.createTransport({
+		service: "gmail",
+		secure: false,
+		auth:{//date login 
+            user:"tehniciwebbuki@gmail.com",
+			pass:"ciayuwxwuhsodgde"
+		},
+		tls:{
+			rejectUnauthorized:false
+		}
+	});
+	//genereaza html
+	await transp.sendMail({
+		from:"tehniciwebbuki@gmail.com",
+		to:email,
+		subject:"Factură",
+		text:"Stimate "+username+", aveți atașată factura",
+		html:"<h1>Salut!</h1><p>Stimate "+username+", aveți atașată factura</p>",
+        attachments: [
+            {   // utf-8 string as an attachment
+                filename: 'factura.pdf',
+                content: fs.readFileSync(numefis)
+            }
+        ]
+	})
+	console.log("trimis mail");
+}
+app.post("/cumpara",function(req, res){
+    if(!req.session.utilizator){
+        res.write("Nu puteti cumpara daca nu sunteti logat!");res.end();
+        return;
+    }
+    client.query("select id, nume, pret, greutate from produse where id in ("+req.body.ids_prod+")", function(err,rez){
+        console.log(err, rez);
+        console.log(rez.rows);
+        
+         let rezFactura=ejs.render(fs.readFileSync("views/pagini/factura.ejs").toString("utf8"),{utilizator:req.session.utilizator,produse:rez.rows});
+        //console.log(rezFactura);
+        let options = { format: 'A4', args: ['--no-sandbox'] };
+
+        let file = { content: rezFactura };
+
+        html_to_pdf.generatePdf(file, options).then(function(pdf) {
+            if(!fs.existsSync("./temp"))
+                fs.mkdirSync("./temp");
+            var numefis="./temp/test"+(new Date()).getTime()+".pdf";
+            fs.writeFileSync(numefis,pdf);
+            trimitefactura2(req.session.utilizator.username, req.session.utilizator.email, numefis);
+            res.write("Totu bine!");res.end();
+        }); 
+        // trimiteFactura(req.session.utilizator.nume, "fantomalbastra@gmail.com");
+       
+    });
+
+    
+});
 
 app.post("/managementProduse", function(req,res) {
     var formular= new formidable.IncomingForm();
