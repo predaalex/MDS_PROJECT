@@ -10,9 +10,9 @@ const formidable = require('formidable');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const session = require('express-session');
-const html_to_pdf = require('html-pdf-node');
+//const html_to_pdf = require('html-pdf-node');
 
-var client = new Client({user:'buki',password:'buki', database:'postgres', host: 'localhost', port:5432});
+var client = new Client({user:'andrei',password:'andrei', database:'proiectweb', host: 'localhost', port:5432});
 client.connect();
 
 app=express();
@@ -33,12 +33,7 @@ app.use("/*", function(req,res,next){
 });
 
 app.get("/produsele_noastre", function(req, res){
-    var conditie="where 1=1 ";
-    if(req.query.tip)
-    {
-        conditie+=`and material='${req.query.tip}'`;
-    }
-    client.query(`SELECT * FROM produse ${conditie}`, function(err,rez){
+    client.query(`SELECT * FROM prods`, function(err,rez){
         if(!err){
             res.render("pagini/produsele_noastre",{produse:rez.rows})
         }
@@ -277,8 +272,10 @@ app.post("/login", function(req,res) {
     formular.parse(req, function(err, campuriText, campuriFile){
         
         var querylogin=`select * from utilizatori where username= '${campuriText.username}' `;
+        console.log(querylogin);
         client.query(querylogin, function(err, rez){
             if (err) {
+                console.log(err);
                 res.render("pagini/404", {err: "eroare baza de date, va rog incercati mai tarziu"});
                 return;
             }
