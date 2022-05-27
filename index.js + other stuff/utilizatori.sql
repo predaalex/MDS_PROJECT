@@ -1,4 +1,4 @@
-CREATE TYPE roluri AS ENUM('admin', 'moderator', 'comun');
+CREATE TYPE roluri AS ENUM('admin', 'comun');
 
 
 CREATE TABLE IF NOT EXISTS utilizatori (
