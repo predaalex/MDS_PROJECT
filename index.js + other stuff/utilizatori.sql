@@ -13,14 +13,6 @@ CREATE TABLE IF NOT EXISTS utilizatori (
    data_adaugare TIMESTAMP DEFAULT current_timestamp
 );
 
-CREATE TABLE IF NOT EXISTS accesari (
-   id serial PRIMARY KEY,
-   ip VARCHAR(100) NOT NULL,
-   user_id INT NULL REFERENCES utilizatori(id),
-   pagina VARCHAR(100) NOT NULL,
-   data_accesare TIMESTAMP DEFAULT current_timestamp
-);
-
 CREATE TABLE IF NOT EXISTS public.prods
 (
     id_prods integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
